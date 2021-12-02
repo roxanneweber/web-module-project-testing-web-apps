@@ -35,7 +35,25 @@ test('renders ONE error message if user enters less then 5 characters into first
 	const firstNameSubmitError = screen.queryByText(/is a required field/i);
 });
 
-test('renders THREE error messages if user enters no values into any fields.', async () => {});
+test('renders THREE error messages if user enters no values into any fields.', async () => {
+	render(<ContactForm />);
+	// 1. find fields
+	const firstNameField = screen.getByPlaceholderText('Edd');
+	const lastNameField = screen.getByPlaceholderText('Burke');
+	const eMailField = screen.getByPlaceholderText('bluebill1049@hotmail.com');
+	// 2. enter text
+	userEvent.type(firstNameField, '');
+	userEvent.type(lastNameField, '');
+	userEvent.type(eMailField, '');
+	// 3. find submit
+	const submitButton = screen.getByRole('button');
+	// 4. click submit
+	userEvent.click(submitButton);
+	// 5. find error message on screen
+	const firstNameSubmitError = screen.queryByText(/is a required field/i);
+	const lastNameSubmitError = screen.queryByText(/is a required field/i);
+	const eMailSubmitError = screen.queryByText(/is a required field/i);
+});
 
 test('renders ONE error message if user enters a valid first name and last name but no email.', async () => {});
 
