@@ -42,7 +42,7 @@ before proceding forward._**
 * [x] In a new terminal window, run `npm test`
 * [x] With each saved change in your editor, the test runner will re-run all the
       tests
-* [ ] **IMPORTANT** If a test fails, use the test runner's error messages to
+* [x] **IMPORTANT** If a test fails, use the test runner's error messages to
       find out why it is failing
 
 ### Task 2: Project Requirements

@@ -10,11 +10,11 @@ test('displays header text', () => {
 	// Arrange: Setup our App component
 	render(<App />);
 	// Act: Find our header component on the screen
-	const header = screen.queryByText(/integration testing challenge/i);
+	const header = screen.queryByText(/Integration Testing Challenge/i);
 	// i tells the test that case does not matter
 
 	// Assert: Confirm header text exists
-	// expect(header).toBeInTheDocument();
+	expect(header).toBeTruthy();
 });
 
 // get assumes something is there or not there
