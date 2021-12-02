@@ -14,7 +14,6 @@ test('renders without errors', () => {
 test('renders the contact form header', () => {
 	//Arrange
 	render(<ContactForm />);
-
 	//Act
 	const header = screen.queryByText(/contact form/i);
 	//Assert
@@ -89,48 +88,68 @@ test('renders "email must be a valid email address" if an invalid email is enter
 	const eMailSubmitError = screen.queryByText(/must be a valid email address/i);
 });
 
-test('renders "lastName is a required field" if an last name is not entered and the submit button is clicked', async () => {});
-
-test('renders all firstName, lastName and email text when submitted. Does NOT render message if message is not submitted.', async () => {});
-
-test('renders all fields text when all fields are submitted.', async () => {});
-
-test('Renders new species when submitting with all fields filled', () => {
-	//Arrange
-	// render(<ContactForm />);
-	//Act:
-	// 1. find text field
-	// const speciesField1 = screen.getByPlaceholderText(/species/i);
-	// make sure something on the screen
-	// 2. type into text field
-	// userEvent.type(speciesField1, 'feline');
-	// adds virtual value to virtual input field
-	// 3. find second text field
-	// const speciesField2 = screen.getByLabelText(/species/i);
-	// 4. type into text field
-	// userEvent.type(speciesField2, 'cat');
-	// add text into second field
-	// 5. find the last field
-	// const speciesField3 = screen.getByLabelText(/species/i);
-	// 6. type into text field
-	// userEvent.type(speciesField3, 'roxanne');
-	// 7. find submit button
-	// const button = screen.getByRole('button');
-	// get specific items with role like button for click
-	// 8. click submit button
-	// userEvent.click(button);
-	// clicking on the button
-	//Assert: items should be rendered without error
-	// 9. submit renders all text
-	// const speciesFeedbackPromise = screen.findByText('feline');
-	// speciesFeedbackPromise.then((speciesFeedback) => {
-	// 	console.log(speciesFeedback);
+test('renders "lastName is a required field" if a last name is not entered and the submit button is clicked', async () => {
+	render(<ContactForm />);
+	// 1. find fields
+	const firstNameField = screen.getByPlaceholderText('Edd');
+	const lastNameField = screen.getByPlaceholderText('Burke');
+	const eMailField = screen.getByPlaceholderText('bluebill1049@hotmail.com');
+	// 2. enter text
+	userEvent.type(firstNameField, 'roxanne');
+	userEvent.type(lastNameField, '');
+	userEvent.type(eMailField, 'message@gmail.com');
+	// 3. find submit
+	const submitButton = screen.getByRole('button');
+	// 4. click submit
+	userEvent.click(submitButton);
+	// 5. find error message on screen
+	const eMailFieldSubmitError = screen.queryByText(/is a required field/i);
 });
 
-// this returns a promise that is executed AFTER change of state is complete
-// const speciesFeedback2 = await screen.fiendByText('feline');
-// expect(speciesFeedback2).toBeDefined();
-// this await will wait until all renders are complete before testing
+test('renders all firstName, lastName and email text when submitted. Does NOT render message if message is not submitted.', async () => {
+	render(<ContactForm />);
+	// 1. find fields
+	const firstNameField = screen.getByPlaceholderText('Edd');
+	const lastNameField = screen.getByPlaceholderText('Burke');
+	const eMailField = screen.getByPlaceholderText('bluebill1049@hotmail.com');
+	const messageField = screen.getByPlaceholderText('Enter your message...');
+	// 2. enter text
+	userEvent.type(firstNameField, 'roxanne');
+	userEvent.type(lastNameField, 'weber');
+	userEvent.type(eMailField, 'rox@email.com');
+	userEvent.type(messageField, '');
+	// 3. find submit
+	const submitButton = screen.getByRole('button');
+	// 4. click submit
+	userEvent.click(submitButton);
+	// 5. renders text if submission is successful
+	// const lastNameResult = expect(lastNameResult).toEqual(firstNameField);
 
-// 10. renders without fail
-// });
+	// expect(firstNameField).toBeTruthy();
+	// expect(lastNameField).toBeTruthy();
+	// expect(eMailField).toBeTruthy();
+	// expect(messageField).not.toBeTruthy();
+});
+
+test('renders all fields text when all fields are submitted.', async () => {
+	render(<ContactForm />);
+	// 1. find fields
+	const firstNameField = screen.getByPlaceholderText('Edd');
+	const lastNameField = screen.getByPlaceholderText('Burke');
+	const eMailField = screen.getByPlaceholderText('bluebill1049@hotmail.com');
+	const messageField = screen.getByPlaceholderText('Enter your message...');
+	// 2. enter text
+	userEvent.type(firstNameField, 'roxanne');
+	userEvent.type(lastNameField, 'weber');
+	userEvent.type(eMailField, 'rox@email.com');
+	userEvent.type(messageField, 'This is my message to you thank you so much');
+	// 3. find submit
+	const submitButton = screen.getByRole('button');
+	// 4. click submit
+	userEvent.click(submitButton);
+	// 5. renders text if submission is successful
+	expect(firstNameField).toBeTruthy();
+	expect(lastNameField).toBeTruthy();
+	expect(eMailField).toBeTruthy();
+	expect(messageField).toBeTruthy();
+});
